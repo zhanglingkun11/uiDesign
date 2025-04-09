@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>办公平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        
+        /* 顶部导航栏 */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #1a4b8b;
+            color: white;
+            padding: 0 20px;
+            height: 50px;
+        }
+        
+        .nav-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+        
+        .logo img {
+            width: 30px;
+            height: 30px;
+            margin-right: 5px;
+        }
+        
+        .nav-items {
+            display: flex;
+        }
+        
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            height: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .nav-item i {
+            margin-right: 5px;
+        }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+        }
+        
+        .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #e58fb8;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 5px;
+        }
+        
+        /* 侧边栏 */
+        .sidebar {
+            width: 200px;
+            background-color: white;
+            border-right: 1px solid #ddd;
+            height: calc(100vh - 50px);
+            overflow-y: auto;
+        }
+        
+        .menu-item {
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .menu-item.expandable {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .menu-item i {
+            margin-right: 8px;
+        }
+        
+        .menu-item .toggle {
+            position: absolute;
+            right: 15px;
+        }
+        
+        .submenu {
+            list-style-type: none;
+        }
+        
+        .submenu-item {
+            padding: 10px 0 10px 40px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .submenu-item:before {
+            content: "•";
+            margin-right: 8px;
+            color: #666;
+        }
+        
+        /* 主容器 */
+        .container {
+            display: flex;
+            height: calc(100vh - 50px);
+        }
+        
+        /* 内容区域 */
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        /* 操作栏 */
+        .operation-bar {
+            display: flex;
+            margin-bottom: 15px;
+            align-items: center;
+        }
+        
+        .operation-btn {
+            padding: 6px 12px;
+            margin-right: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .operation-btn i {
+            margin-right: 5px;
+        }
+        
+        /* 表单 */
+        .form-container {
+            background-color: white;
+            border: 1px solid #ddd;
+        }
+        
+        .form-title {
+            padding: 10px 20px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        .form-row {
+            display: flex;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .form-label {
+            width: 200px;
+            padding: 10px 20px;
+            background-color: #f9f9f9;
+            border-right: 1px solid #eee;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        
+        .form-value {
+            flex: 1;
+            padding: 10px 20px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .blue-link {
+            color: #1a4b8b;
+            text-decoration: none;
+        }
+        
+        /* 表格中的标签样式 */
+        .tag {
+            color: #1a4b8b;
+            background-color: #e9f2ff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+        }
+        
+        /* 响应式 */
+        @media (max-width: 992px) {
+            .sidebar {
+                width: 60px;
+            }
+            
+            .menu-item span,
+            .submenu-item span {
+                display: none;
+            }
+            
+            .submenu-item {
+                padding-left: 18px;
+            }
+        }
+    </style>
+    <script src="index.js"></script>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <div class="header">
+        <div class="nav-left">
+            <div class="logo">
+                <img src="/api/placeholder/30/30">
+                <span>办公平台</span>
+            </div>
+            <div class="nav-items">
+                <div class="nav-item">
+                    <i>📊</i>
+                    <span>工作门户</span>
+                </div>
+                <div class="nav-item">
+                    <i>📄</i>
+                    <span>收文管理</span>
+                </div>
+                <div class="nav-item">
+                    <i>📝</i>
+                    <span>发文管理</span>
+                </div>
+                <div class="nav-item">
+                    <i>📨</i>
+                    <span>公文传送</span>
+                </div>
+                <div class="nav-item">
+                    <i>📚</i>
+                    <span>资料库</span>
+                </div>
+                <div class="nav-item">
+                    <i>📢</i>
+                    <span>通知公告</span>
+                </div>
+                <div class="nav-item">
+                    <i>📅</i>
+                    <span>会议通知</span>
+                </div>
+                <div class="nav-item">
+                    <i>🏢</i>
+                    <span>会议室管理</span>
+                </div>
+                <div class="nav-item">
+                    <i>🔄</i>
+                    <span>省公文交换</span>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="notification">
+                <i>🔔</i>
+            </div>
+            <div class="user-info">
+                <span>全部</span>
+                <i>▼</i>
+                <div class="avatar">技</div>
+                <span>技术中心人员</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 侧边栏 -->
+        <div class="sidebar">
+            <div class="menu-item expandable">
+                <i>📑</i>
+                <span>刊物管理</span>
+                <span class="toggle">▲</span>
+            </div>
+            <ul class="submenu">
+                <li class="submenu-item">
+                    <span>在编刊物</span>
+                </li>
+                <li class="submenu-item">
+                    <span>定稿刊物</span>
+                </li>
+            </ul>
+            
+            <div class="menu-item expandable">
+                <i>📋</i>
+                <span>信息管理</span>
+                <span class="toggle">▲</span>
+            </div>
+            <ul class="submenu">
+                <li class="submenu-item">
+                    <span>刊物信息</span>
+                </li>
+            </ul>
+            
+            <div class="menu-item expandable">
+                <i>🔧</i>
+                <span>刊物设置</span>
+                <span class="toggle">▲</span>
+            </div>
+            <ul class="submenu">
+                <li class="submenu-item">
+                    <span>模板管理</span>
+                </li>
+                <li class="submenu-item">
+                    <span>授权管理</span>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- 内容区域 -->
+        <div class="content">
+            <!-- 操作栏 -->
+            <div class="operation-bar">
+                <div class="operation-btn">
+                    <i>◀</i>
+                    <span>返回</span>
+                </div>
+                <div class="operation-btn">
+                    <i>✏️</i>
+                    <span>修改</span>
+                </div>
+                <div class="operation-btn">
+                    <i>🗑️</i>
+                    <span>删除</span>
+                </div>
+                <div class="operation-btn">
+                    <i>👤</i>
+                    <span>信息录入</span>
+                </div>
+                <div class="operation-btn">
+                    <i>✓</i>
+                    <span>生成刊物</span>
+                </div>
+            </div>
+            
+            <!-- 表单 -->
+            <div class="form-container">
+                <div class="form-title">
+                    刊物名称：青岛信息（要情）
+                </div>
+                <div class="form-row">
+                    <div class="form-label">模板：</div>
+                    <div class="form-value">青岛信息2025模板</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">密级：</div>
+                    <div class="form-value">秘密</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">保密期限：</div>
+                    <div class="form-value">10年</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">期刊号：</div>
+                    <div class="form-value">1</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">承办单位：</div>
+                    <div class="form-value">信息调研室</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">责任编辑：</div>
+                    <div class="form-value">张三</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">审核人员：</div>
+                    <div class="form-value">
+                        <span class="tag">朱雀</span>
+                        <span>1</span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-label">联系电话：</div>
+                    <div class="form-value">15634428888</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
