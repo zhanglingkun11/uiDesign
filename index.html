@@ -3,409 +3,627 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>办公平台</title>
+    <title>  办公平台 - 领导活动创建</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", sans-serif;
+            font-family: "Microsoft YaHei", "SimHei", sans-serif;
         }
-        
         body {
-            background-color: #f5f5f5;
-            color: #333;
+            background-color: #f0f2f5;
         }
-        
-        /* 顶部导航栏 */
         .header {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            background-color: #1a4b8b;
+            background-color: #1a56a8;
             color: white;
             padding: 0 20px;
             height: 50px;
         }
-        
-        .nav-left {
-            display: flex;
-            align-items: center;
-        }
-        
         .logo {
             display: flex;
             align-items: center;
-            margin-right: 20px;
         }
-        
         .logo img {
             width: 30px;
             height: 30px;
-            margin-right: 5px;
+            margin-right: 10px;
         }
-        
-        .nav-items {
+        .nav {
             display: flex;
+            flex: 1;
+            margin-left: 20px;
         }
-        
         .nav-item {
             display: flex;
             align-items: center;
             padding: 0 15px;
             height: 50px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            font-size: 14px;
         }
-        
         .nav-item i {
             margin-right: 5px;
         }
-        
-        .nav-right {
+        .user-section {
             display: flex;
             align-items: center;
         }
-        
-        .user-info {
+        .user-actions {
             display: flex;
             align-items: center;
-            margin-left: 15px;
+            margin-right: 10px;
         }
-        
-        .avatar {
+        .user-avatar {
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background-color: #e58fb8;
+            background-color: #d48bff;
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 5px;
+            margin-right: 10px;
         }
-        
-        /* 侧边栏 */
+        .dropdown {
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .main-content {
+            display: flex;
+            height: calc(100vh - 50px);
+        }
         .sidebar {
             width: 200px;
             background-color: white;
-            border-right: 1px solid #ddd;
-            height: calc(100vh - 50px);
-            overflow-y: auto;
+            border-right: 1px solid #e8e8e8;
+            padding: 10px 0;
         }
-        
-        .menu-item {
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .menu-item.expandable {
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .menu-item i {
-            margin-right: 8px;
-        }
-        
-        .menu-item .toggle {
-            position: absolute;
-            right: 15px;
-        }
-        
-        .submenu {
+        .sidebar-menu {
             list-style-type: none;
         }
-        
-        .submenu-item {
-            padding: 10px 0 10px 40px;
+        .sidebar-menu-item {
             display: flex;
             align-items: center;
+            padding: 10px 15px;
+            font-size: 14px;
             cursor: pointer;
         }
-        
-        .submenu-item:before {
-            content: "•";
-            margin-right: 8px;
-            color: #666;
-        }
-        
-        /* 主容器 */
-        .container {
-            display: flex;
-            height: calc(100vh - 50px);
-        }
-        
-        /* 内容区域 */
-        .content {
-            flex: 1;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        
-        /* 操作栏 */
-        .operation-bar {
-            display: flex;
-            margin-bottom: 15px;
-            align-items: center;
-        }
-        
-        .operation-btn {
-            padding: 6px 12px;
-            margin-right: 10px;
-            background-color: #f5f5f5;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-        
-        .operation-btn i {
+        .sidebar-menu-item i {
             margin-right: 5px;
         }
-        
-        /* 表单 */
-        .form-container {
-            background-color: white;
-            border: 1px solid #ddd;
+        .sidebar-menu-item.active {
+            background-color: #e6f7ff;
+            color: #1890ff;
+            border-right: 3px solid #1890ff;
         }
-        
-        .form-title {
-            padding: 10px 20px;
-            border-bottom: 1px solid #eee;
+        .submenu {
+            list-style-type: none;
+            margin-left: 15px;
+        }
+        .submenu-item {
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .submenu-item:before {
+            content: "•";
+            margin-right: 10px;
+        }
+        .main-panel {
+            flex: 1;
+            padding: 20px;
+            background-color: #f0f2f5;
+            overflow-y: auto;
+        }
+        .action-bar {
+            display: flex;
+            margin-bottom: 20px;
             font-size: 14px;
         }
-        
-        .form-row {
-            display: flex;
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 6px;
+            padding: 6px 12px;
+            border: 1px solid #ddd;
+            background-color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #666;
+        }
+        .action-button i {
+            margin-right: 5px;
+            font-size: 16px;
+        }
+        .content-card {
+            background-color: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
             border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
-        
+        .form-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .form-table tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .form-table td {
+            padding: 12px 8px;
+            font-size: 14px;
+        }
         .form-label {
-            width: 200px;
-            padding: 10px 20px;
-            background-color: #f9f9f9;
-            border-right: 1px solid #eee;
+            width: 15%;
             text-align: right;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
+            color: #606266;
         }
-        
         .form-value {
-            flex: 1;
-            padding: 10px 20px;
-            min-height: 40px;
-            display: flex;
+            width: 35%;
+        }
+        .required:after {
+            content: "*";
+            color: #f56c6c;
+            margin-left: 4px;
+        }
+        .form-input {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-select {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-datetime {
+            width: 90%;
+            padding: 8px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .activity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            border: 1px solid #ebeef5;
+        }
+        .activity-table th, .activity-table td {
+            padding: 12px 8px;
+            text-align: left;
+            font-size: 14px;
+            border-bottom: 1px solid #ebeef5;
+        }
+        .activity-table th {
+            background-color: #f5f7fa;
+            color: #606266;
+            font-weight: 500;
+        }
+        .activity-table tr:hover {
+            background-color: #f5f7fa;
+        }
+        .delete-btn {
+            color: #f56c6c;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .add-row-btn {
+            display: inline-flex;
             align-items: center;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background-color: #f0f7ff;
+            border: 1px solid #a3d0fd;
+            color: #1890ff;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
         }
-        
-        .blue-link {
-            color: #1a4b8b;
-            text-decoration: none;
+        .add-row-btn i {
+            margin-right: 5px;
         }
-        
-        /* 表格中的标签样式 */
-        .tag {
-            color: #1a4b8b;
-            background-color: #e9f2ff;
-            padding: 2px 6px;
-            border-radius: 3px;
+        .form-footer {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .submit-btn {
+            padding: 10px 20px;
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        .cancel-btn {
+            padding: 10px 20px;
+            background-color: white;
+            color: #606266;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .error-message {
+            color: #f56c6c;
             font-size: 12px;
+            margin-top: 5px;
+            display: none;
         }
-        
-        /* 响应式 */
-        @media (max-width: 992px) {
-            .sidebar {
-                width: 60px;
+        .has-error .form-input,
+        .has-error .form-select,
+        .has-error .form-datetime {
+            border-color: #f56c6c;
+        }
+        .has-error .error-message {
+            display: block;
+        }
+        @media (max-width: 768px) {
+            .form-label {
+                width: 30%;
             }
-            
-            .menu-item span,
-            .submenu-item span {
+            .form-value {
+                width: 70%;
+            }
+            .form-table td {
+                display: block;
+                width: 100%;
+                text-align: left;
+            }
+            .form-label {
+                text-align: left;
+                padding-bottom: 0;
+            }
+            .nav {
                 display: none;
             }
-            
-            .submenu-item {
-                padding-left: 18px;
+            .sidebar {
+                display: none;
+            }
+            .main-content {
+                flex-direction: column;
+            }
+            .main-panel {
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 顶部导航栏 -->
     <div class="header">
-        <div class="nav-left">
-            <div class="logo">
-                <img src="/api/placeholder/30/30">
-                <span>办公平台</span>
+        <div class="logo">
+            <img src="/api/placeholder/30/30" alt="logo">
+            <span>  办公平台</span>
+        </div>
+        <div class="nav">
+            <div class="nav-item">
+                <i>🏠</i> 工作门户
             </div>
-            <div class="nav-items">
-                <div class="nav-item">
-                    <i>📊</i>
-                    <span>工作门户</span>
-                </div>
-                <div class="nav-item">
-                    <i>📄</i>
-                    <span>收文管理</span>
-                </div>
-                <div class="nav-item">
-                    <i>📝</i>
-                    <span>发文管理</span>
-                </div>
-                <div class="nav-item">
-                    <i>📨</i>
-                    <span>公文传送</span>
-                </div>
-                <div class="nav-item">
-                    <i>📚</i>
-                    <span>资料库</span>
-                </div>
-                <div class="nav-item">
-                    <i>📢</i>
-                    <span>通知公告</span>
-                </div>
-                <div class="nav-item">
-                    <i>📅</i>
-                    <span>会议通知</span>
-                </div>
-                <div class="nav-item">
-                    <i>🏢</i>
-                    <span>会议室管理</span>
-                </div>
-                <div class="nav-item">
-                    <i>🔄</i>
-                    <span>省公文交换</span>
-                </div>
+            <div class="nav-item">
+                <i>📁</i> 收文管理
+            </div>
+            <div class="nav-item">
+                <i>📝</i> 发文管理
+            </div>
+            <div class="nav-item">
+                <i>📄</i> 公文传送
+            </div>
+            <div class="nav-item">
+                <i>📚</i> 资料库
+            </div>
+            <div class="nav-item">
+                <i>📢</i> 通知公告
+            </div>
+            <div class="nav-item">
+                <i>📅</i> 会议通知
+            </div>
+            <div class="nav-item">
+                <i>🏢</i> 会议室管理
+            </div>
+            <div class="nav-item">
+                <i>🔄</i> 省公文交换
             </div>
         </div>
-        <div class="nav-right">
-            <div class="notification">
+        <div class="user-section">
+            <div class="user-actions">
+                <span>🏠 全部</span>
+                <span class="dropdown">▼</span>
+            </div>
+            <div class="user-actions">
                 <i>🔔</i>
             </div>
-            <div class="user-info">
-                <span>全部</span>
-                <i>▼</i>
-                <div class="avatar">技</div>
-                <span>技术中心人员</span>
-            </div>
+            <div class="user-avatar">技</div>
+            <span>技术中心人员</span>
+            <span class="dropdown">▼</span>
         </div>
     </div>
-    
-    <!-- 主容器 -->
-    <div class="container">
-        <!-- 侧边栏 -->
+    <div class="main-content">
         <div class="sidebar">
-            <div class="menu-item expandable">
-                <i>📑</i>
-                <span>刊物管理</span>
-                <span class="toggle">▲</span>
-            </div>
-            <ul class="submenu">
-                <li class="submenu-item">
-                    <span>在编刊物</span>
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item active">
+                    <i>📋</i> 领导活动管理
+                    <span style="margin-left: auto;">▲</span>
                 </li>
-                <li class="submenu-item">
-                    <span>定稿刊物</span>
+                <ul class="submenu">
+                    <li class="submenu-item">活动列表</li>
+                    <li class="submenu-item">活动创建</li>
+                    <li class="submenu-item">活动统计</li>
+                </ul>
+                <li class="sidebar-menu-item">
+                    <i>📄</i> 日程安排
+                    <span style="margin-left: auto;">▲</span>
                 </li>
-            </ul>
-            
-            <div class="menu-item expandable">
-                <i>📋</i>
-                <span>信息管理</span>
-                <span class="toggle">▲</span>
-            </div>
-            <ul class="submenu">
-                <li class="submenu-item">
-                    <span>刊物信息</span>
+                <ul class="submenu">
+                    <li class="submenu-item">日程列表</li>
+                    <li class="submenu-item">日程录入</li>
+                </ul>
+                <li class="sidebar-menu-item">
+                    <i>⚙️</i> 系统设置
+                    <span style="margin-left: auto;">▲</span>
                 </li>
-            </ul>
-            
-            <div class="menu-item expandable">
-                <i>🔧</i>
-                <span>刊物设置</span>
-                <span class="toggle">▲</span>
-            </div>
-            <ul class="submenu">
-                <li class="submenu-item">
-                    <span>模板管理</span>
-                </li>
-                <li class="submenu-item">
-                    <span>授权管理</span>
-                </li>
+                <ul class="submenu">
+                    <li class="submenu-item">模板管理</li>
+                    <li class="submenu-item">授权管理</li>
+                    <li class="submenu-item">人员设置</li>
+                </ul>
             </ul>
         </div>
-        
-        <!-- 内容区域 -->
-        <div class="content">
-            <!-- 操作栏 -->
-            <div class="operation-bar">
-                <div class="operation-btn">
-                    <i>◀</i>
-                    <span>返回</span>
-                </div>
-                <div class="operation-btn">
-                    <i>✏️</i>
-                    <span>修改</span>
-                </div>
-                <div class="operation-btn">
-                    <i>🗑️</i>
-                    <span>删除</span>
-                </div>
-                <div class="operation-btn">
-                    <i>👤</i>
-                    <span>信息录入</span>
-                </div>
-                <div class="operation-btn">
-                    <i>✓</i>
-                    <span>生成刊物</span>
-                </div>
+        <div class="main-panel">
+            <div class="action-bar">
+                <button class="action-button"><i>◀</i> 返回</button>
+                <button class="action-button"><i>💾</i> 保存</button>
+                <button class="action-button"><i>🔍</i> 预览</button>
             </div>
             
-            <!-- 表单 -->
-            <div class="form-container">
-                <div class="form-title">
-                    刊物名称：青岛信息（要情）
+            <form id="leadershipActivityForm">
+                <div class="content-card">
+                    <div class="card-title">领导活动创建 - 基本信息</div>
+                    <table class="form-table">
+                        <tr>
+                            <td class="form-label"><span class="required">活动名称</span></td>
+                            <td class="form-value">
+                                <div class="form-field">
+                                    <input type="text" class="form-input" id="activityName" name="activityName" placeholder="请输入活动名称">
+                                    <div class="error-message">请输入活动名称</div>
+                                </div>
+                            </td>
+                            <td class="form-label"><span class="required">活动类型</span></td>
+                            <td class="form-value">
+                                <div class="form-field">
+                                    <select class="form-select" id="activityType" name="activityType">
+                                        <option value="">请选择</option>
+                                        <option value="1">会议</option>
+                                        <option value="2">调研</option>
+                                        <option value="3">视察</option>
+                                        <option value="4">接待</option>
+                                        <option value="5">其他</option>
+                                    </select>
+                                    <div class="error-message">请选择活动类型</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="form-label"><span class="required">开始时间</span></td>
+                            <td class="form-value">
+                                <div class="form-field">
+                                    <input type="datetime-local" class="form-datetime" id="startTime" name="startTime">
+                                    <div class="error-message">请选择开始时间</div>
+                                </div>
+                            </td>
+                            <td class="form-label"><span class="required">结束时间</span></td>
+                            <td class="form-value">
+                                <div class="form-field">
+                                    <input type="datetime-local" class="form-datetime" id="endTime" name="endTime">
+                                    <div class="error-message">请选择结束时间</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="form-label">活动地点</td>
+                            <td class="form-value">
+                                <input type="text" class="form-input" id="mainLocation" name="mainLocation" placeholder="请输入活动主要地点">
+                            </td>
+                            <td class="form-label">密级</td>
+                            <td class="form-value">
+                                <select class="form-select" id="securityLevel" name="securityLevel">
+                                    <option value="0">普通</option>
+                                    <option value="1">内部</option>
+                                    <option value="2">秘密</option>
+                                    <option value="3">机密</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="form-label">活动简介</td>
+                            <td class="form-value" colspan="3">
+                                <textarea class="form-input" id="activityDesc" name="activityDesc" style="height: 80px;" placeholder="请输入活动简介或备注信息"></textarea>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="form-row">
-                    <div class="form-label">模板：</div>
-                    <div class="form-value">青岛信息2025模板</div>
+                
+                <div class="content-card">
+                    <div class="card-title">领导活动记录明细</div>
+                    <table class="activity-table" id="activityDetailTable">
+                        <thead>
+                            <tr>
+                                <th style="width: 8%;">序号</th>
+                                <th style="width: 15%;">领导姓名</th>
+                                <th style="width: 20%;">活动地点</th>
+                                <th style="width: 20%;">参与人员</th>
+                                <th>活动内容</th>
+                                <th style="width: 8%;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <select class="form-select" name="leaderName">
+                                        <option value="">请选择</option>
+                                        <option value="张三">张三</option>
+                                        <option value="李四">李四</option>
+                                        <option value="王五">王五</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="form-input" name="activityLocation" placeholder="请输入地点">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-input" name="participants" placeholder="请输入参与人员">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-input" name="activityContent" placeholder="请输入活动内容">
+                                </td>
+                                <td>
+                                    <button type="button" class="delete-btn">删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button type="button" class="add-row-btn" id="addRowBtn">
+                        <i>+</i> 添加一条
+                    </button>
                 </div>
-                <div class="form-row">
-                    <div class="form-label">密级：</div>
-                    <div class="form-value">秘密</div>
+                
+                <div class="form-footer">
+                    <button type="submit" class="submit-btn" id="submitBtn">提交</button>
+                    <button type="button" class="cancel-btn" id="cancelBtn">取消</button>
                 </div>
-                <div class="form-row">
-                    <div class="form-label">保密期限：</div>
-                    <div class="form-value">10年</div>
-                </div>
-                <div class="form-row">
-                    <div class="form-label">期刊号：</div>
-                    <div class="form-value">1</div>
-                </div>
-                <div class="form-row">
-                    <div class="form-label">承办单位：</div>
-                    <div class="form-value">信息调研室</div>
-                </div>
-                <div class="form-row">
-                    <div class="form-label">责任编辑：</div>
-                    <div class="form-value">张三</div>
-                </div>
-                <div class="form-row">
-                    <div class="form-label">审核人员：</div>
-                    <div class="form-value">
-                        <span class="tag">朱雀</span>
-                        <span>1</span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-label">联系电话：</div>
-                    <div class="form-value">15634428888</div>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
+
+    <script>
+        // 添加一行记录
+        document.getElementById('addRowBtn').addEventListener('click', function() {
+            const tbody = document.querySelector('#activityDetailTable tbody');
+            const rowCount = tbody.rows.length;
+            const newRow = document.createElement('tr');
+            
+            newRow.innerHTML = `
+                <td>${rowCount + 1}</td>
+                <td>
+                    <select class="form-select" name="leaderName">
+                        <option value="">请选择</option>
+                        <option value="张三">张三</option>
+                        <option value="李四">李四</option>
+                        <option value="王五">王五</option>
+                    </select>
+                </td>
+                <td>
+                    <input type="text" class="form-input" name="activityLocation" placeholder="请输入地点">
+                </td>
+                <td>
+                    <input type="text" class="form-input" name="participants" placeholder="请输入参与人员">
+                </td>
+                <td>
+                    <input type="text" class="form-input" name="activityContent" placeholder="请输入活动内容">
+                </td>
+                <td>
+                    <button type="button" class="delete-btn">删除</button>
+                </td>
+            `;
+            
+            tbody.appendChild(newRow);
+            
+            // 为新添加的删除按钮绑定事件
+            newRow.querySelector('.delete-btn').addEventListener('click', function() {
+                deleteRow(this);
+            });
+        });
+        
+        // 删除行并重新编号
+        function deleteRow(btn) {
+            const tbody = document.querySelector('#activityDetailTable tbody');
+            const row = btn.closest('tr');
+            row.remove();
+            
+            // 重新编号
+            const rows = tbody.rows;
+            for (let i = 0; i < rows.length; i++) {
+                rows[i].cells[0].textContent = i + 1;
+            }
+        }
+        
+        // 初始绑定删除按钮事件
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                deleteRow(this);
+            });
+        });
+        
+        // 表单验证
+        document.getElementById('leadershipActivityForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            let isValid = true;
+            const requiredFields = ['activityName', 'activityType', 'startTime', 'endTime'];
+            
+            requiredFields.forEach(field => {
+                const element = document.getElementById(field);
+                const formField = element.closest('.form-field');
+                
+                if (!element.value.trim()) {
+                    formField.classList.add('has-error');
+                    isValid = false;
+                } else {
+                    formField.classList.remove('has-error');
+                }
+            });
+            
+            // 验证结束时间是否大于开始时间
+            const startTime = new Date(document.getElementById('startTime').value);
+            const endTime = new Date(document.getElementById('endTime').value);
+            
+            if (startTime >= endTime) {
+                const endTimeField = document.getElementById('endTime').closest('.form-field');
+                endTimeField.classList.add('has-error');
+                endTimeField.querySelector('.error-message').textContent = '结束时间必须晚于开始时间';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                alert('表单验证通过，准备提交数据！');
+                // 提交表单的代码
+                // this.submit();
+            } else {
+                // 滚动到第一个错误字段
+                const firstError = document.querySelector('.has-error');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+        });
+        
+        // 取消按钮
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            if (confirm('确定要取消编辑吗？所有未保存的数据将丢失。')) {
+                window.location.href = '#'; // 返回列表页
+            }
+        });
+    </script>
 </body>
 </html>
