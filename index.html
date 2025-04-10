@@ -3,625 +3,726 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>  办公平台 - 领导活动创建</title>
+    <title>授权用户选择弹窗</title>
     <style>
+        /* 基础样式重置 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Microsoft YaHei", "SimHei", sans-serif;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
         }
+        
         body {
-            background-color: #f0f2f5;
-        }
-        .header {
-            display: flex;
-            align-items: center;
-            background-color: #1a56a8;
-            color: white;
-            padding: 0 20px;
-            height: 50px;
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        .logo img {
-            width: 30px;
-            height: 30px;
-            margin-right: 10px;
-        }
-        .nav {
-            display: flex;
-            flex: 1;
-            margin-left: 20px;
-        }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-            height: 50px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .nav-item i {
-            margin-right: 5px;
-        }
-        .user-section {
-            display: flex;
-            align-items: center;
-        }
-        .user-actions {
-            display: flex;
-            align-items: center;
-            margin-right: 10px;
-        }
-        .user-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #d48bff;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-        .dropdown {
-            margin-left: 10px;
-            cursor: pointer;
-        }
-        .main-content {
-            display: flex;
-            height: calc(100vh - 50px);
-        }
-        .sidebar {
-            width: 200px;
-            background-color: white;
-            border-right: 1px solid #e8e8e8;
-            padding: 10px 0;
-        }
-        .sidebar-menu {
-            list-style-type: none;
-        }
-        .sidebar-menu-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 15px;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .sidebar-menu-item i {
-            margin-right: 5px;
-        }
-        .sidebar-menu-item.active {
-            background-color: #e6f7ff;
-            color: #1890ff;
-            border-right: 3px solid #1890ff;
-        }
-        .submenu {
-            list-style-type: none;
-            margin-left: 15px;
-        }
-        .submenu-item {
-            padding: 8px 15px;
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .submenu-item:before {
-            content: "•";
-            margin-right: 10px;
-        }
-        .main-panel {
-            flex: 1;
-            padding: 20px;
-            background-color: #f0f2f5;
-            overflow-y: auto;
-        }
-        .action-bar {
-            display: flex;
-            margin-bottom: 20px;
-            font-size: 14px;
-        }
-        .action-button {
-            display: inline-flex;
-            align-items: center;
-            margin-right: 6px;
-            padding: 6px 12px;
-            border: 1px solid #ddd;
-            background-color: white;
-            border-radius: 4px;
-            cursor: pointer;
-            color: #666;
-        }
-        .action-button i {
-            margin-right: 5px;
-            font-size: 16px;
-        }
-        .content-card {
-            background-color: white;
-            border-radius: 4px;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .card-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #333;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
-        }
-        .form-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .form-table tr {
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .form-table td {
-            padding: 12px 8px;
-            font-size: 14px;
-        }
-        .form-label {
-            width: 15%;
-            text-align: right;
-            color: #606266;
-        }
-        .form-value {
-            width: 35%;
-        }
-        .required:after {
-            content: "*";
-            color: #f56c6c;
-            margin-left: 4px;
-        }
-        .form-input {
-            width: 90%;
-            padding: 8px;
-            border: 1px solid #dcdfe6;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .form-select {
-            width: 90%;
-            padding: 8px;
-            border: 1px solid #dcdfe6;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .form-datetime {
-            width: 90%;
-            padding: 8px;
-            border: 1px solid #dcdfe6;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        .activity-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            border: 1px solid #ebeef5;
-        }
-        .activity-table th, .activity-table td {
-            padding: 12px 8px;
-            text-align: left;
-            font-size: 14px;
-            border-bottom: 1px solid #ebeef5;
-        }
-        .activity-table th {
             background-color: #f5f7fa;
-            color: #606266;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* 模拟主页面样式 */
+        .main-container {
+            padding: 20px;
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background-color: #fff;
+            padding: 15px 20px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 18px;
+            color: #333;
             font-weight: 500;
         }
-        .activity-table tr:hover {
-            background-color: #f5f7fa;
-        }
-        .delete-btn {
-            color: #f56c6c;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .add-row-btn {
-            display: inline-flex;
-            align-items: center;
-            margin-top: 15px;
-            padding: 8px 16px;
-            background-color: #f0f7ff;
-            border: 1px solid #a3d0fd;
-            color: #1890ff;
+        
+        .content {
+            background-color: #fff;
+            padding: 20px;
             border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        .add-row-btn i {
-            margin-right: 5px;
+        
+        /* 弹窗样式 */
+        .modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         }
-        .form-footer {
+        
+        .modal-backdrop.show {
             display: flex;
+            align-items: center;
             justify-content: center;
-            margin-top: 30px;
+            opacity: 1;
         }
-        .submit-btn {
-            padding: 10px 20px;
-            background-color: #1890ff;
-            color: white;
-            border: none;
+        
+        .modal-container {
+            width: 800px;
+            max-width: 90%;
+            background-color: #fff;
             border-radius: 4px;
-            font-size: 14px;
-            cursor: pointer;
-            margin-right: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
         }
-        .cancel-btn {
-            padding: 10px 20px;
-            background-color: white;
-            color: #606266;
+        
+        .modal-backdrop.show .modal-container {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .modal-header {
+            padding: 16px 24px;
+            border-bottom: 1px solid #ebeef5;
+            position: relative;
+        }
+        
+        .modal-title {
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 24px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #909399;
+            transition: color 0.2s;
+        }
+        
+        .modal-close:hover {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 24px;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+        
+        .modal-footer {
+            padding: 16px 24px;
+            border-top: 1px solid #ebeef5;
+            text-align: right;
+        }
+        
+        /* 搜索区域样式 */
+        .search-area {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .search-input {
+            flex: 1;
+            position: relative;
+        }
+        
+        .search-input input {
+            width: 100%;
+            padding: 8px 12px;
             border: 1px solid #dcdfe6;
             border-radius: 4px;
             font-size: 14px;
+            transition: border-color 0.2s;
+            padding-left: 32px;
+        }
+        
+        .search-input input:focus {
+            outline: none;
+            border-color: #409eff;
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #909399;
+        }
+        
+        .filter-dropdown {
+            min-width: 120px;
+        }
+        
+        .filter-dropdown select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #dcdfe6;
+            border-radius: 4px;
+            background-color: #fff;
+            font-size: 14px;
+            color: #333;
             cursor: pointer;
         }
-        .error-message {
-            color: #f56c6c;
+        
+        /* 用户列表样式 */
+        .user-list {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .user-list th {
+            background-color: #f5f7fa;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 500;
+            color: #606266;
+            border-bottom: 1px solid #ebeef5;
+        }
+        
+        .user-list td {
+            padding: 12px 16px;
+            border-bottom: 1px solid #ebeef5;
+        }
+        
+        .user-list tr:hover {
+            background-color: #f5f7fa;
+        }
+        
+        .user-list tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .user-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e1e6f0;
+            color: #409eff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-name {
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .user-department {
+            color: #606266;
+        }
+        
+        .user-role {
+            color: #606266;
+            display: inline-block;
+            background-color: #f0f2f5;
+            padding: 2px 8px;
+            border-radius: 3px;
             font-size: 12px;
-            margin-top: 5px;
-            display: none;
         }
-        .has-error .form-input,
-        .has-error .form-select,
-        .has-error .form-datetime {
-            border-color: #f56c6c;
+        
+        /* 分页样式 */
+        .pagination {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 20px;
+            align-items: center;
+            gap: 8px;
         }
-        .has-error .error-message {
-            display: block;
+        
+        .pagination-info {
+            color: #909399;
+            font-size: 13px;
+            margin-right: 10px;
         }
-        @media (max-width: 768px) {
-            .form-label {
-                width: 30%;
-            }
-            .form-value {
-                width: 70%;
-            }
-            .form-table td {
-                display: block;
-                width: 100%;
-                text-align: left;
-            }
-            .form-label {
-                text-align: left;
-                padding-bottom: 0;
-            }
-            .nav {
-                display: none;
-            }
-            .sidebar {
-                display: none;
-            }
-            .main-content {
-                flex-direction: column;
-            }
-            .main-panel {
-                padding: 10px;
-            }
+        
+        .pagination-btn {
+            border: 1px solid #dcdfe6;
+            background-color: #fff;
+            color: #606266;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .pagination-btn:hover {
+            color: #409eff;
+            border-color: #c6e2ff;
+            background-color: #ecf5ff;
+        }
+        
+        .pagination-btn.disabled {
+            cursor: not-allowed;
+            color: #c0c4cc;
+            background-color: #f5f7fa;
+        }
+        
+        .pagination-btn.active {
+            color: #409eff;
+            border-color: #409eff;
+        }
+        
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+        }
+        
+        .btn-default {
+            background-color: #fff;
+            border-color: #dcdfe6;
+            color: #606266;
+        }
+        
+        .btn-default:hover {
+            color: #409eff;
+            border-color: #c6e2ff;
+            background-color: #ecf5ff;
+        }
+        
+        .btn-primary {
+            background-color: #409eff;
+            color: #fff;
+        }
+        
+        .btn-primary:hover {
+            background-color: #66b1ff;
+        }
+        
+        .btn-primary:active {
+            background-color: #3a8ee6;
+        }
+        
+        .btn + .btn {
+            margin-left: 10px;
+        }
+        
+        /* 工具类 */
+        .d-flex {
+            display: flex;
+        }
+        
+        .align-center {
+            align-items: center;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <div class="logo">
-            <img src="/api/placeholder/30/30" alt="logo">
-            <span>  办公平台</span>
+    <!-- 模拟主页面 -->
+    <div class="main-container">
+        <div class="header">
+            <h1>系统管理</h1>
         </div>
-        <div class="nav">
-            <div class="nav-item">
-                <i>🏠</i> 工作门户
+        <div class="content">
+            <button id="openModal" class="btn btn-primary">打开授权用户选择</button>
+            <div id="selectedUsersContainer" style="margin-top: 20px; display: none;">
+                <h3>已选择的用户：</h3>
+                <div id="selectedUsersList" style="margin-top: 10px;"></div>
             </div>
-            <div class="nav-item">
-                <i>📁</i> 收文管理
-            </div>
-            <div class="nav-item">
-                <i>📝</i> 发文管理
-            </div>
-            <div class="nav-item">
-                <i>📄</i> 公文传送
-            </div>
-            <div class="nav-item">
-                <i>📚</i> 资料库
-            </div>
-            <div class="nav-item">
-                <i>📢</i> 通知公告
-            </div>
-            <div class="nav-item">
-                <i>📅</i> 会议通知
-            </div>
-            <div class="nav-item">
-                <i>🏢</i> 会议室管理
-            </div>
-            <div class="nav-item">
-                <i>🔄</i> 省公文交换
-            </div>
-        </div>
-        <div class="user-section">
-            <div class="user-actions">
-                <span>🏠 全部</span>
-                <span class="dropdown">▼</span>
-            </div>
-            <div class="user-actions">
-                <i>🔔</i>
-            </div>
-            <div class="user-avatar">技</div>
-            <span>技术中心人员</span>
-            <span class="dropdown">▼</span>
         </div>
     </div>
-    <div class="main-content">
-        <div class="sidebar">
-            <ul class="sidebar-menu">
-                <li class="sidebar-menu-item active">
-                    <i>📋</i> 领导活动管理
-                    <span style="margin-left: auto;">▲</span>
-                </li>
-                <ul class="submenu">
-                    <li class="submenu-item">活动列表</li>
-                    <li class="submenu-item">活动创建</li>
-                    <li class="submenu-item">活动统计</li>
-                </ul>
-                <li class="sidebar-menu-item">
-                    <i>📄</i> 日程安排
-                    <span style="margin-left: auto;">▲</span>
-                </li>
-                <ul class="submenu">
-                    <li class="submenu-item">日程列表</li>
-                    <li class="submenu-item">日程录入</li>
-                </ul>
-                <li class="sidebar-menu-item">
-                    <i>⚙️</i> 系统设置
-                    <span style="margin-left: auto;">▲</span>
-                </li>
-                <ul class="submenu">
-                    <li class="submenu-item">模板管理</li>
-                    <li class="submenu-item">授权管理</li>
-                    <li class="submenu-item">人员设置</li>
-                </ul>
-            </ul>
-        </div>
-        <div class="main-panel">
-            <div class="action-bar">
-                <button class="action-button"><i>◀</i> 返回</button>
-                <button class="action-button"><i>💾</i> 保存</button>
-                <button class="action-button"><i>🔍</i> 预览</button>
+    
+    <!-- 授权用户选择弹窗 -->
+    <div id="userModal" class="modal-backdrop show">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">选择授权用户</h3>
+                <span class="modal-close" id="closeModal">×</span>
             </div>
-            
-            <form id="leadershipActivityForm">
-                <div class="content-card">
-                    <div class="card-title">领导活动创建 - 基本信息</div>
-                    <table class="form-table">
-                        <tr>
-                            <td class="form-label"><span class="required">活动名称</span></td>
-                            <td class="form-value">
-                                <div class="form-field">
-                                    <input type="text" class="form-input" id="activityName" name="activityName" placeholder="请输入活动名称">
-                                    <div class="error-message">请输入活动名称</div>
-                                </div>
-                            </td>
-                            <td class="form-label"><span class="required">活动类型</span></td>
-                            <td class="form-value">
-                                <div class="form-field">
-                                    <select class="form-select" id="activityType" name="activityType">
-                                        <option value="">请选择</option>
-                                        <option value="1">会议</option>
-                                        <option value="2">调研</option>
-                                        <option value="3">视察</option>
-                                        <option value="4">接待</option>
-                                        <option value="5">其他</option>
-                                    </select>
-                                    <div class="error-message">请选择活动类型</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="form-label"><span class="required">开始时间</span></td>
-                            <td class="form-value">
-                                <div class="form-field">
-                                    <input type="datetime-local" class="form-datetime" id="startTime" name="startTime">
-                                    <div class="error-message">请选择开始时间</div>
-                                </div>
-                            </td>
-                            <td class="form-label"><span class="required">结束时间</span></td>
-                            <td class="form-value">
-                                <div class="form-field">
-                                    <input type="datetime-local" class="form-datetime" id="endTime" name="endTime">
-                                    <div class="error-message">请选择结束时间</div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="form-label">活动地点</td>
-                            <td class="form-value">
-                                <input type="text" class="form-input" id="mainLocation" name="mainLocation" placeholder="请输入活动主要地点">
-                            </td>
-                            <td class="form-label">密级</td>
-                            <td class="form-value">
-                                <select class="form-select" id="securityLevel" name="securityLevel">
-                                    <option value="0">普通</option>
-                                    <option value="1">内部</option>
-                                    <option value="2">秘密</option>
-                                    <option value="3">机密</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="form-label">活动简介</td>
-                            <td class="form-value" colspan="3">
-                                <textarea class="form-input" id="activityDesc" name="activityDesc" style="height: 80px;" placeholder="请输入活动简介或备注信息"></textarea>
-                            </td>
-                        </tr>
-                    </table>
+            <div class="modal-body">
+                <!-- 搜索/筛选区域 -->
+                <div class="search-area">
+                    <div class="search-input">
+                        <span class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                            </svg>
+                        </span>
+                        <input type="text" id="searchInput" placeholder="搜索用户名/部门/职位">
+                    </div>
+                    <div class="filter-dropdown">
+                        <select id="departmentFilter">
+                            <option value="">所有部门</option>
+                            <option value="技术部">技术部</option>
+                            <option value="市场部">市场部</option>
+                            <option value="财务部">财务部</option>
+                            <option value="人力资源部">人力资源部</option>
+                            <option value="产品部">产品部</option>
+                        </select>
+                    </div>
+                    <div class="filter-dropdown">
+                        <select id="roleFilter">
+                            <option value="">所有职位</option>
+                            <option value="开发工程师">开发工程师</option>
+                            <option value="产品经理">产品经理</option>
+                            <option value="市场专员">市场专员</option>
+                            <option value="财务经理">财务经理</option>
+                            <option value="HR专员">HR专员</option>
+                            <option value="部门主管">部门主管</option>
+                        </select>
+                    </div>
                 </div>
                 
-                <div class="content-card">
-                    <div class="card-title">领导活动记录明细</div>
-                    <table class="activity-table" id="activityDetailTable">
-                        <thead>
-                            <tr>
-                                <th style="width: 8%;">序号</th>
-                                <th style="width: 15%;">领导姓名</th>
-                                <th style="width: 20%;">活动地点</th>
-                                <th style="width: 20%;">参与人员</th>
-                                <th>活动内容</th>
-                                <th style="width: 8%;">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>
-                                    <select class="form-select" name="leaderName">
-                                        <option value="">请选择</option>
-                                        <option value="张三">张三</option>
-                                        <option value="李四">李四</option>
-                                        <option value="王五">王五</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <input type="text" class="form-input" name="activityLocation" placeholder="请输入地点">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-input" name="participants" placeholder="请输入参与人员">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-input" name="activityContent" placeholder="请输入活动内容">
-                                </td>
-                                <td>
-                                    <button type="button" class="delete-btn">删除</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button type="button" class="add-row-btn" id="addRowBtn">
-                        <i>+</i> 添加一条
-                    </button>
-                </div>
+                <!-- 用户列表 -->
+                <table class="user-list">
+                    <thead>
+                        <tr>
+                            <th width="40">
+                                <input type="checkbox" id="selectAll" class="user-checkbox">
+                            </th>
+                            <th>用户</th>
+                            <th>部门</th>
+                            <th>职位</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <!-- 用户列表将通过JS动态生成 -->
+                    </tbody>
+                </table>
                 
-                <div class="form-footer">
-                    <button type="submit" class="submit-btn" id="submitBtn">提交</button>
-                    <button type="button" class="cancel-btn" id="cancelBtn">取消</button>
+                <!-- 分页控件 -->
+                <div class="pagination">
+                    <span class="pagination-info">共 <span id="totalItems">0</span> 条记录，当前 <span id="currentPage">1</span>/<span id="totalPages">1</span> 页</span>
+                    <button class="pagination-btn" id="prevPage">上一页</button>
+                    <div id="pageNumbers"></div>
+                    <button class="pagination-btn" id="nextPage">下一页</button>
                 </div>
-            </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" id="cancelBtn">取消</button>
+                <button class="btn btn-primary" id="confirmBtn">确认</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // 添加一行记录
-        document.getElementById('addRowBtn').addEventListener('click', function() {
-            const tbody = document.querySelector('#activityDetailTable tbody');
-            const rowCount = tbody.rows.length;
-            const newRow = document.createElement('tr');
-            
-            newRow.innerHTML = `
-                <td>${rowCount + 1}</td>
-                <td>
-                    <select class="form-select" name="leaderName">
-                        <option value="">请选择</option>
-                        <option value="张三">张三</option>
-                        <option value="李四">李四</option>
-                        <option value="王五">王五</option>
-                    </select>
-                </td>
-                <td>
-                    <input type="text" class="form-input" name="activityLocation" placeholder="请输入地点">
-                </td>
-                <td>
-                    <input type="text" class="form-input" name="participants" placeholder="请输入参与人员">
-                </td>
-                <td>
-                    <input type="text" class="form-input" name="activityContent" placeholder="请输入活动内容">
-                </td>
-                <td>
-                    <button type="button" class="delete-btn">删除</button>
-                </td>
-            `;
-            
-            tbody.appendChild(newRow);
-            
-            // 为新添加的删除按钮绑定事件
-            newRow.querySelector('.delete-btn').addEventListener('click', function() {
-                deleteRow(this);
-            });
+        // 模拟用户数据
+        const users = [
+            { id: 1, name: '张三', department: '技术部', role: '开发工程师', avatar: 'ZS' },
+            { id: 2, name: '李四', department: '技术部', role: '部门主管', avatar: 'LS' },
+            { id: 3, name: '王五', department: '市场部', role: '市场专员', avatar: 'WW' },
+            { id: 4, name: '赵六', department: '财务部', role: '财务经理', avatar: 'ZL' },
+            { id: 5, name: '钱七', department: '人力资源部', role: 'HR专员', avatar: 'QQ' },
+            { id: 6, name: '孙八', department: '产品部', role: '产品经理', avatar: 'SB' },
+            { id: 7, name: '周九', department: '技术部', role: '开发工程师', avatar: 'ZJ' },
+            { id: 8, name: '吴十', department: '市场部', role: '市场专员', avatar: 'WS' },
+            { id: 9, name: '郑十一', department: '技术部', role: '开发工程师', avatar: 'ZS' },
+            { id: 10, name: '王十二', department: '财务部', role: '财务经理', avatar: 'WS' },
+            { id: 11, name: '李十三', department: '人力资源部', role: 'HR专员', avatar: 'LS' },
+            { id: 12, name: '张十四', department: '产品部', role: '产品经理', avatar: 'ZS' },
+            { id: 13, name: '刘十五', department: '技术部', role: '开发工程师', avatar: 'LS' },
+            { id: 14, name: '陈十六', department: '市场部', role: '部门主管', avatar: 'CS' },
+            { id: 15, name: '杨十七', department: '技术部', role: '开发工程师', avatar: 'YS' }
+        ];
+        
+        // 页面相关变量
+        let currentPage = 1;
+        const pageSize = 5;
+        let filteredUsers = [...users];
+        const selectedUsers = new Set();
+        
+        // DOM元素
+        const userModal = document.getElementById('userModal');
+        const openModalBtn = document.getElementById('openModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const userTableBody = document.getElementById('userTableBody');
+        const searchInput = document.getElementById('searchInput');
+        const departmentFilter = document.getElementById('departmentFilter');
+        const roleFilter = document.getElementById('roleFilter');
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const prevPageBtn = document.getElementById('prevPage');
+        const nextPageBtn = document.getElementById('nextPage');
+        const pageNumbersContainer = document.getElementById('pageNumbers');
+        const currentPageEl = document.getElementById('currentPage');
+        const totalPagesEl = document.getElementById('totalPages');
+        const totalItemsEl = document.getElementById('totalItems');
+        const selectedUsersContainer = document.getElementById('selectedUsersContainer');
+        const selectedUsersList = document.getElementById('selectedUsersList');
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            renderUserList();
+            updatePagination();
         });
         
-        // 删除行并重新编号
-        function deleteRow(btn) {
-            const tbody = document.querySelector('#activityDetailTable tbody');
-            const row = btn.closest('tr');
-            row.remove();
+        // 打开弹窗
+        openModalBtn.addEventListener('click', () => {
+            userModal.classList.add('show');
+            // 防止背景滚动
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // 关闭弹窗的多种方式
+        const closeModal = () => {
+            userModal.classList.remove('show');
+            document.body.style.overflow = '';
+        };
+        
+        closeModalBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        userModal.addEventListener('click', (e) => {
+            if (e.target === userModal) {
+                closeModal();
+            }
+        });
+        
+        // 确认按钮处理
+        confirmBtn.addEventListener('click', () => {
+            // 获取所选用户数据
+            const selectedUserData = users.filter(user => selectedUsers.has(user.id));
             
-            // 重新编号
-            const rows = tbody.rows;
-            for (let i = 0; i < rows.length; i++) {
-                rows[i].cells[0].textContent = i + 1;
+            // 输出所选用户数据（实际应用中可能发送到服务器或进行其他处理）
+            console.log('选择的用户:', selectedUserData);
+            
+            // 显示选中的用户
+            displaySelectedUsers(selectedUserData);
+            
+            // 关闭弹窗
+            closeModal();
+        });
+        
+        // 显示选中的用户到主页面
+        function displaySelectedUsers(selectedUserData) {
+            if (selectedUserData.length > 0) {
+                selectedUsersContainer.style.display = 'block';
+                selectedUsersList.innerHTML = '';
+                
+                selectedUserData.forEach(user => {
+                    const userDiv = document.createElement('div');
+                    userDiv.style.padding = '8px';
+                    userDiv.style.marginBottom = '5px';
+                    userDiv.style.backgroundColor = '#f5f7fa';
+                    userDiv.style.borderRadius = '4px';
+                    userDiv.innerHTML = `
+                        <div class="d-flex align-center">
+                            <div class="user-avatar" style="width: 24px; height: 24px; font-size: 12px;">${user.avatar}</div>
+                            <div style="margin-left: 8px;">
+                                <span class="user-name">${user.name}</span>
+                                <span style="margin-left: 8px;" class="user-department">${user.department}</span>
+                                <span style="margin-left: 8px;" class="user-role">${user.role}</span>
+                            </div>
+                        </div>
+                    `;
+                    selectedUsersList.appendChild(userDiv);
+                });
+            } else {
+                selectedUsersContainer.style.display = 'none';
             }
         }
         
-        // 初始绑定删除按钮事件
-        document.querySelectorAll('.delete-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                deleteRow(this);
-            });
-        });
-        
-        // 表单验证
-        document.getElementById('leadershipActivityForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+        // 筛选用户
+        function filterUsers() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const departmentValue = departmentFilter.value;
+            const roleValue = roleFilter.value;
             
-            let isValid = true;
-            const requiredFields = ['activityName', 'activityType', 'startTime', 'endTime'];
-            
-            requiredFields.forEach(field => {
-                const element = document.getElementById(field);
-                const formField = element.closest('.form-field');
+            filteredUsers = users.filter(user => {
+                const matchesSearch = searchTerm === '' || 
+                                    user.name.toLowerCase().includes(searchTerm) || 
+                                    user.department.toLowerCase().includes(searchTerm) || 
+                                    user.role.toLowerCase().includes(searchTerm);
+                const matchesDepartment = departmentValue === '' || user.department === departmentValue;
+                const matchesRole = roleValue === '' || user.role === roleValue;
                 
-                if (!element.value.trim()) {
-                    formField.classList.add('has-error');
-                    isValid = false;
-                } else {
-                    formField.classList.remove('has-error');
-                }
+                return matchesSearch && matchesDepartment && matchesRole;
             });
             
-            // 验证结束时间是否大于开始时间
-            const startTime = new Date(document.getElementById('startTime').value);
-            const endTime = new Date(document.getElementById('endTime').value);
+            // 重置到第一页
+            currentPage = 1;
             
-            if (startTime >= endTime) {
-                const endTimeField = document.getElementById('endTime').closest('.form-field');
-                endTimeField.classList.add('has-error');
-                endTimeField.querySelector('.error-message').textContent = '结束时间必须晚于开始时间';
-                isValid = false;
+            // 重新渲染
+            renderUserList();
+            updatePagination();
+        }
+        
+        // 监听筛选条件变化
+        searchInput.addEventListener('input', filterUsers);
+        departmentFilter.addEventListener('change', filterUsers);
+        roleFilter.addEventListener('change', filterUsers);
+        
+        // 全选/取消全选
+        selectAllCheckbox.addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.user-checkbox:not(#selectAll)');
+            const currentPageUsers = getCurrentPageUsers();
+            
+            checkboxes.forEach((checkbox, index) => {
+                if (index < currentPageUsers.length) {
+                    checkbox.checked = this.checked;
+                    const userId = currentPageUsers[index].id;
+                    
+                    if (this.checked) {
+                        selectedUsers.add(userId);
+                    } else {
+                        selectedUsers.delete(userId);
+                    }
+                }
+            });
+        });
+        
+        // 渲染用户列表
+        function renderUserList() {
+            userTableBody.innerHTML = '';
+            const currentPageUsers = getCurrentPageUsers();
+            
+            if (currentPageUsers.length === 0) {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="4" style="text-align: center; padding: 30px 0;">暂无匹配的用户</td>`;
+                userTableBody.appendChild(emptyRow);
+                return;
             }
             
-            if (isValid) {
-                alert('表单验证通过，准备提交数据！');
-                // 提交表单的代码
-                // this.submit();
-            } else {
-                // 滚动到第一个错误字段
-                const firstError = document.querySelector('.has-error');
-                if (firstError) {
-                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+            currentPageUsers.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="user-checkbox" data-id="${user.id}" ${selectedUsers.has(user.id) ? 'checked' : ''}>
+                    </td>
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">${user.avatar}</div>
+                            <div class="user-name">${user.name}</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="user-department">${user.department}</div>
+                    </td>
+                    <td>
+                        <div class="user-role">${user.role}</div>
+                    </td>
+                `;
+                userTableBody.appendChild(row);
+            });
+            
+            // 添加单个用户选择事件
+            document.querySelectorAll('.user-checkbox:not(#selectAll)').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const userId = parseInt(this.getAttribute('data-id'));
+                    
+                    if (this.checked) {
+                        selectedUsers.add(userId);
+                    } else {
+                        selectedUsers.delete(userId);
+                    }
+                    
+                    // 检查当前页是否全选
+                    updateSelectAllCheckbox();
+                });
+            });
+            
+            // 更新全选框状态
+            updateSelectAllCheckbox();
+        }
+        
+        // 更新全选框状态
+        function updateSelectAllCheckbox() {
+            const currentPageUsers = getCurrentPageUsers();
+            const allChecked = currentPageUsers.every(user => selectedUsers.has(user.id));
+            selectAllCheckbox.checked = currentPageUsers.length > 0 && allChecked;
+        }
+        
+        // 获取当前页用户
+        function getCurrentPageUsers() {
+            const startIndex = (currentPage - 1) * pageSize;
+            return filteredUsers.slice(startIndex, startIndex + pageSize);
+        }
+        
+        // 更新分页信息
+        function updatePagination() {
+            const totalItems = filteredUsers.length;
+            const totalPages = Math.ceil(totalItems / pageSize) || 1;
+            
+            currentPageEl.textContent = currentPage;
+            totalPagesEl.textContent = totalPages;
+            totalItemsEl.textContent = totalItems;
+            
+            // 启用/禁用上一页/下一页按钮
+            prevPageBtn.classList.toggle('disabled', currentPage === 1);
+            nextPageBtn.classList.toggle('disabled', currentPage === totalPages);
+            
+            // 生成页码
+            renderPageNumbers(totalPages);
+        }
+        
+        // 渲染页码
+        function renderPageNumbers(totalPages) {
+            pageNumbersContainer.innerHTML = '';
+            
+            const maxPageNumbers = 5; // 最多显示的页码数
+            let startPage = Math.max(1, currentPage - Math.floor(maxPageNumbers / 2));
+            let endPage = Math.min(totalPages, startPage + maxPageNumbers - 1);
+            
+            if (endPage - startPage + 1 < maxPageNumbers) {
+                startPage = Math.max(1, endPage - maxPageNumbers + 1);
+            }
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `pagination-btn ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    renderUserList();
+                    updatePagination();
+                });
+                
+                pageNumbersContainer.appendChild(pageBtn);
+            }
+        }
+        
+        // 上一页/下一页事件
+        prevPageBtn.addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderUserList();
+                updatePagination();
             }
         });
         
-        // 取消按钮
-        document.getElementById('cancelBtn').addEventListener('click', function() {
-            if (confirm('确定要取消编辑吗？所有未保存的数据将丢失。')) {
-                window.location.href = '#'; // 返回列表页
+        nextPageBtn.addEventListener('click', () => {
+            const totalPages = Math.ceil(filteredUsers.length / pageSize) || 1;
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderUserList();
+                updatePagination();
             }
         });
     </script>
