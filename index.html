@@ -3,792 +3,463 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>显化应用 - 大地黏土风格UI设计</title>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>电子政务系统一体化监控仪表板 (V2)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-color: #0d1117;
+            --panel-bg-color: #161b22;
+            --border-color: #30363d;
+            --text-color: #c9d1d9;
+            --text-secondary-color: #8b949e;
+            --color-green: #238636;
+            --color-blue: #388bfd;
+            --color-yellow: #d29922;
+            --color-orange: #f0883e;
+            --color-red: #da3633;
+            --color-purple: #a371f7;
         }
 
         body {
-            font-family: 'Nunito', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #F0E5D8 0%, #E6D5C7 100%);
-            padding: 20px;
-            min-height: 100vh;
-            color: #5D4037;
-        }
-
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        .title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            color: #4E3B31;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .pages-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .phone-frame {
-            width: 375px;
-            height: 812px;
-            border: 1px solid #C39B7B;
-            border-radius: 25px;
-            overflow: hidden;
-            position: relative;
-            background: #E6D5C7;
-            box-shadow: 
-                0 20px 40px rgba(0,0,0,0.15),
-                inset 0 2px 4px rgba(255,255,255,0.3),
-                inset 0 -2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .phone-frame:hover {
-            transform: translateY(-5px);
-            box-shadow: 
-                0 25px 50px rgba(0,0,0,0.2),
-                inset 0 2px 4px rgba(255,255,255,0.3),
-                inset 0 -2px 4px rgba(0,0,0,0.1);
-        }
-
-        .page {
-            width: 100%;
-            height: 100%;
-            padding: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .page-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            text-align: center;
-            color: #4E3B31;
-        }
-
-        /* 黏土风格组件 */
-        .clay-button {
-            background: #E6D5C7;
-            border: none;
-            border-radius: 20px;
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #5D4037;
-            cursor: pointer;
-            box-shadow: 
-                0 4px 8px rgba(0,0,0,0.15),
-                inset 0 2px 4px rgba(255,255,255,0.3),
-                inset 0 -2px 4px rgba(0,0,0,0.1);
-            transition: all 0.3s ease;
-        }
-
-        .clay-button:hover {
-            box-shadow: 
-                0 2px 4px rgba(0,0,0,0.1),
-                inset 0 -2px 4px rgba(255,255,255,0.3),
-                inset 0 2px 4px rgba(0,0,0,0.15);
-        }
-
-        .clay-card {
-            background: #E6D5C7;
-            border-radius: 20px;
-            padding: 16px;
-            margin-bottom: 16px;
-            box-shadow: 
-                0 6px 12px rgba(0,0,0,0.15),
-                inset 0 2px 4px rgba(255,255,255,0.3),
-                inset 0 -2px 4px rgba(0,0,0,0.1);
-        }
-
-        .clay-input {
-            background: #E6D5C7;
-            border: none;
-            border-radius: 15px;
-            padding: 12px 16px;
-            width: 100%;
-            font-size: 14px;
-            color: #5D4037;
-            box-shadow: 
-                inset 0 2px 4px rgba(0,0,0,0.15),
-                inset 0 -2px 4px rgba(255,255,255,0.3);
-        }
-
-        .clay-input::placeholder {
-            color: #8D6E63;
-        }
-
-        /* 3D图标样式 */
-        .icon-3d {
-            width: 24px;
-            height: 24px;
-            fill: #C39B7B;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
-        }
-
-        .large-icon {
-            width: 80px;
-            height: 80px;
-            fill: #B07D62;
-            filter: drop-shadow(4px 4px 8px rgba(0,0,0,0.3));
-        }
-
-        /* 动画效果 */
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-
-        /* 进度条 */
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #E6D5C7;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #C39B7B, #B07D62);
-            border-radius: 4px;
-            transition: width 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        /* 折线图动画 */
-        .chart-line {
-            stroke: #B07D62;
-            stroke-width: 3;
-            fill: none;
-            stroke-dasharray: 200;
-            stroke-dashoffset: 200;
-            animation: drawLine 2s ease-in-out forwards;
-        }
-
-        @keyframes drawLine {
-            to {
-                stroke-dashoffset: 0;
-            }
-        }
-
-        /* 页面特定样式 */
-        .splash-screen {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            margin: 0;
+            padding: 1rem;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-top: 20px;
-        }
-
-        .goal-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .vision-board {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .vision-item {
-            aspect-ratio: 1;
-            border-radius: 15px;
+            height: calc(100vh - 2rem);
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
         }
 
-        .vision-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .header {
+            text-align: center;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
         }
 
-        .settings-item {
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #f0f6fc;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto 1fr 1fr;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+        .panel {
+            background-color: var(--panel-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+        }
+        
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        /* A: Core Metrics */
+        .core-metrics {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-around;
             align-items: center;
-            padding: 16px 0;
-            border-bottom: 1px solid rgba(157, 110, 99, 0.2);
         }
+        .metric-item { text-align: center; }
+        .metric-item .value { font-size: 2rem; font-weight: 600; }
+        .metric-item .label { font-size: 0.9rem; color: var(--text-secondary-color); margin-top: 0.25rem; }
+        .metric-item .value.green { color: var(--color-green); }
+        .metric-item .value.orange { color: var(--color-orange); }
+        .metric-item .value.red { color: var(--color-red); }
 
-        .toggle {
-            width: 50px;
-            height: 26px;
-            background: #E6D5C7;
-            border-radius: 13px;
-            position: relative;
+        /* B: Stability Radar & Resources */
+        .stability-panel { grid-row: 2; grid-column: 1; display: flex; flex-direction: column; gap: 1rem; }
+        .radar-container { flex-grow: 1; display: flex; justify-content: center; align-items: center; }
+        .resource-container .water-level {
+            margin-bottom: 0.75rem;
+        }
+        .water-level .label { font-size: 0.9rem; margin-bottom: 0.25rem; display: block;}
+        .level-bar-bg { background-color: var(--border-color); border-radius: 4px; height: 1.5rem; padding: 4px; }
+        .level-bar-fg { height: 100%; border-radius: 2px; transition: width 0.5s ease-out; }
+        
+        /* C: Alert Center */
+        .alert-center-panel { grid-row: 2; grid-column: 2; display: flex; flex-direction: column; gap: 1rem; }
+        .alert-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex-grow: 1; }
+        .alert-list li { padding: 0.5rem; border-left: 4px solid; margin-bottom: 0.5rem; background-color: rgba(0,0,0,0.1); border-radius: 0 4px 4px 0; }
+        .alert-list .predictive { border-color: var(--color-purple); }
+        .alert-list .anomaly { border-color: var(--color-yellow); }
+        .alert-list .active-p0 { border-color: var(--color-red); animation: pulse-red 1s infinite; }
+        .alert-list .active-p1 { border-color: var(--color-orange); }
+        .alert-list .icon { margin-right: 0.5rem; }
+        .alert-list .time { color: var(--text-secondary-color); font-size: 0.8rem; margin-left: 1rem; }
+        .alert-list .message { font-size: 0.9rem; }
+
+        /* D: APM Panel */
+        .apm-panel { grid-row: 3; grid-column: 1; display: flex; flex-direction: column; gap: 1rem; }
+        .service-heatmap { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 0.5rem; }
+        .service-cell {
+            padding: 0.75rem;
+            border-radius: 4px;
+            text-align: center;
+            font-size: 0.9rem;
             cursor: pointer;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
         }
+        .service-cell:hover { transform: translateY(-3px); }
+        .service-cell.flicker { animation: flicker 1.5s infinite; }
+        .top-lists { display: flex; gap: 1rem; flex-grow: 1; }
+        .top-list-container { flex: 1; }
+        .top-list { list-style: none; padding: 0; margin: 0; }
+        .top-list li { background-color: #21262d; padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 4px; font-size: 0.9rem; display: flex; justify-content: space-between; }
+        .top-list li .service { color: var(--text-secondary-color); }
+        .top-list li .value { font-weight: 600; }
+        .top-list li .error-value { color: var(--color-red); }
+        .top-list li .slow-value { color: var(--color-orange); }
 
-        .toggle.active {
-            background: #C39B7B;
+        /* E: Log Analysis */
+        .log-panel { grid-row: 3; grid-column: 2; display: flex; flex-direction: column; gap: 1rem; }
+        .log-stream { background-color: #010409; font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.8rem; padding: 0.5rem; overflow-y: auto; flex-grow: 1; border-radius: 4px; }
+        .log-line { white-space: pre-wrap; word-break: break-all; margin-bottom: 0.25rem; }
+        .log-line .timestamp { color: #58a6ff; }
+        .log-line .level-ERROR { color: #f85149; font-weight: bold; }
+        .log-line .service { color: #a371f7; }
+        .log-line .trace-id { color: #79c0ff; text-decoration: underline; cursor: pointer; }
+        .log-cluster-list { list-style: none; padding: 0; margin: 0; }
+        .log-cluster-item { background-color: #21262d; padding: 0.5rem; margin-bottom: 0.5rem; border-radius: 4px; }
+        .log-cluster-item .pattern { font-size: 0.9rem; margin-bottom: 0.25rem; }
+        .log-cluster-item .count { color: var(--text-secondary-color); font-size: 0.8rem; }
+        
+        /* Animations */
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(218, 54, 51, 0.4); }
+            70% { box-shadow: 0 0 0 8px rgba(218, 54, 51, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(218, 54, 51, 0); }
         }
-
-        .toggle::after {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            background: #FAF3E9;
-            border-radius: 50%;
-            top: 2px;
-            left: 2px;
-            transition: transform 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .toggle.active::after {
-            transform: translateX(24px);
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
     </style>
 </head>
 <body>
-    <!-- SVG图标定义 -->
-    <svg style="display: none;">
-        <defs>
-            <!-- 主页图标 -->
-            <symbol id="home-icon" viewBox="0 0 24 24">
-                <path d="M12 3L4 9v12h4v-6h8v6h4V9l-8-6z" fill="currentColor"/>
-            </symbol>
-            
-            <!-- 目标图标 -->
-            <symbol id="target-icon" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/>
-                <circle cx="12" cy="12" r="6" fill="none" stroke="currentColor" stroke-width="2"/>
-                <circle cx="12" cy="12" r="2" fill="currentColor"/>
-            </symbol>
-            
-            <!-- 心形图标 -->
-            <symbol id="heart-icon" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor"/>
-            </symbol>
-            
-            <!-- 书本图标 -->
-            <symbol id="book-icon" viewBox="0 0 24 24">
-                <path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9H9V9h10v2zm-4 4H9v-2h6v2zm4-8H9V5h10v2z" fill="currentColor"/>
-            </symbol>
-            
-            <!-- 愿景板图标 -->
-            <symbol id="vision-icon" viewBox="0 0 24 24">
-                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" fill="currentColor"/>
-            </symbol>
-            
-            <!-- 设置图标 -->
-            <symbol id="settings-icon" viewBox="0 0 24 24">
-                <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z" fill="currentColor"/>
-            </symbol>
-            
-            <!-- 加号图标 -->
-            <symbol id="plus-icon" viewBox="0 0 24 24">
-                <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" fill="currentColor"/>
-            </symbol>
-            
-            <!-- 星星图标 -->
-            <symbol id="star-icon" viewBox="0 0 24 24">
-                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="currentColor"/>
-            </symbol>
-        </defs>
-    </svg>
 
-    <div class="container">
-        <h1 class="title">显化应用 - 大地黏土风格UI设计</h1>
-        
-        <div class="pages-grid">
-            <!-- 1. 启动页 -->
-            <div class="phone-frame">
-                <div class="page splash-screen">
-                    <div class="floating">
-                        <svg class="large-icon" style="margin-bottom: 30px;">
-                            <use href="#star-icon"></use>
-                        </svg>
-                    </div>
-                    <h2 style="font-size: 2rem; margin-bottom: 20px; color: #4E3B31;">显化</h2>
-                    <p style="font-size: 1rem; color: #8D6E63; text-align: center; line-height: 1.6;">让梦想成为现实<br>开启你的显化之旅</p>
-                    <img src="https://source.unsplash.com/300x200/?pottery,meditation,zen" alt="3D插画" style="width: 200px; height: 150px; object-fit: cover; border-radius: 20px; margin: 30px 0; box-shadow: 0 8px 16px rgba(0,0,0,0.2);">
-                    <button class="clay-button" style="margin-top: 20px;">开始旅程</button>
+    <header class="header">
+        <h1>电子政务系统 - 运维作战指挥中心</h1>
+    </header>
+
+    <div class="main-container">
+        <!-- A: Core Metrics -->
+        <div class="panel core-metrics">
+            <div class="metric-item">
+                <div id="sla" class="value green">99.98%</div>
+                <div class="label">系统可用率 (24H)</div>
+            </div>
+            <div class="metric-item">
+                <div id="mttr" class="value green">15.2</div>
+                <div class="label">平均修复时间 (分钟)</div>
+            </div>
+            <div class="metric-item">
+                <div id="active-alerts" class="value orange">2</div>
+                <div class="label">活跃P0/P1告警</div>
+            </div>
+            <div class="metric-item">
+                <div id="predictive-risks" class="value red">3</div>
+                <div class="label">预测性风险 (7D)</div>
+            </div>
+        </div>
+
+        <!-- B: Stability Radar & Resources -->
+        <div class="panel stability-panel">
+            <div>
+                <div class="panel-title">系统稳定性雷达</div>
+                <div class="radar-container">
+                    <canvas id="stability-radar"></canvas>
                 </div>
             </div>
+            <div>
+                <div class="panel-title">核心集群资源水位</div>
+                <div id="resource-levels" class="resource-container"></div>
+            </div>
+        </div>
 
-            <!-- 2. 主页/仪表盘 -->
-            <div class="phone-frame">
-                <div class="page">
-                    <div class="page-title">主页</div>
-                    <div class="clay-card">
-                        <h3 style="margin-bottom: 10px;">今日进展</h3>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 75%;"></div>
-                        </div>
-                        <p style="font-size: 12px; color: #8D6E63; margin-top: 8px;">3/4 个目标已完成</p>
-                    </div>
-                    <div class="dashboard-grid">
-                        <div class="clay-card" style="text-align: center; padding: 20px;">
-                            <svg class="icon-3d" style="margin-bottom: 10px;">
-                                <use href="#target-icon"></use>
-                            </svg>
-                            <p style="font-size: 12px;">目标</p>
-                            <p style="font-size: 18px; font-weight: 600; color: #B07D62;">8</p>
-                        </div>
-                        <div class="clay-card" style="text-align: center; padding: 20px;">
-                            <svg class="icon-3d" style="margin-bottom: 10px;">
-                                <use href="#heart-icon"></use>
-                            </svg>
-                            <p style="font-size: 12px;">肯定语</p>
-                            <p style="font-size: 18px; font-weight: 600; color: #B07D62;">15</p>
-                        </div>
-                        <div class="clay-card" style="text-align: center; padding: 20px;">
-                            <svg class="icon-3d" style="margin-bottom: 10px;">
-                                <use href="#book-icon"></use>
-                            </svg>
-                            <p style="font-size: 12px;">日记</p>
-                            <p style="font-size: 18px; font-weight: 600; color: #B07D62;">12</p>
-                        </div>
-                        <div class="clay-card" style="text-align: center; padding: 20px;">
-                            <svg class="icon-3d" style="margin-bottom: 10px;">
-                                <use href="#vision-icon"></use>
-                            </svg>
-                            <p style="font-size: 12px;">愿景</p>
-                            <p style="font-size: 18px; font-weight: 600; color: #B07D62;">6</p>
-                        </div>
-                    </div>
-                    <div class="clay-card" style="margin-top: 20px;">
-                        <h4 style="margin-bottom: 10px;">今日肯定语</h4>
-                        <p style="font-style: italic; color: #8D6E63; font-size: 14px;">"我值得拥有所有美好的事物"</p>
-                    </div>
+        <!-- C: Alert Center -->
+        <div class="panel alert-center-panel">
+            <div class="panel-title">智能预警与异常事件中心</div>
+            <ul id="alert-list" class="alert-list"></ul>
+        </div>
+
+        <!-- D: APM Panel -->
+        <div class="panel apm-panel">
+            <div>
+                <div class="panel-title">服务健康状态热力图</div>
+                <div id="service-heatmap" class="service-heatmap"></div>
+            </div>
+            <div class="top-lists">
+                <div class="top-list-container">
+                    <div class="panel-title">错误率最高 Top 5</div>
+                    <ul id="top-error-list" class="top-list"></ul>
+                </div>
+                <div class="top-list-container">
+                    <div class="panel-title">P99响应最慢 Top 5</div>
+                    <ul id="top-slow-list" class="top-list"></ul>
                 </div>
             </div>
+        </div>
 
-            <!-- 3. 目标列表页 -->
-            <div class="phone-frame">
-                <div class="page">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <div class="page-title" style="margin: 0;">我的目标</div>
-                        <button class="clay-button" style="padding: 8px 12px;">
-                            <svg class="icon-3d" style="width: 16px; height: 16px;">
-                                <use href="#plus-icon"></use>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="clay-card">
-                        <div class="goal-item">
-                            <svg class="icon-3d">
-                                <use href="#target-icon"></use>
-                            </svg>
-                            <div style="flex: 1;">
-                                <h4>健康生活</h4>
-                                <div class="progress-bar" style="margin-top: 8px;">
-                                    <div class="progress-fill" style="width: 80%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <div class="goal-item">
-                            <svg class="icon-3d">
-                                <use href="#target-icon"></use>
-                            </svg>
-                            <div style="flex: 1;">
-                                <h4>事业成功</h4>
-                                <div class="progress-bar" style="margin-top: 8px;">
-                                    <div class="progress-fill" style="width: 60%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <div class="goal-item">
-                            <svg class="icon-3d">
-                                <use href="#target-icon"></use>
-                            </svg>
-                            <div style="flex: 1;">
-                                <h4>财务自由</h4>
-                                <div class="progress-bar" style="margin-top: 8px;">
-                                    <div class="progress-fill" style="width: 45%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <div class="goal-item">
-                            <svg class="icon-3d">
-                                <use href="#target-icon"></use>
-                            </svg>
-                            <div style="flex: 1;">
-                                <h4>人际关系</h4>
-                                <div class="progress-bar" style="margin-top: 8px;">
-                                    <div class="progress-fill" style="width: 90%;"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <!-- E: Log Analysis -->
+        <div class="panel log-panel">
+            <div>
+                <div class="panel-title">实时错误日志流</div>
+                <div id="log-stream" class="log-stream"></div>
             </div>
-
-            <!-- 4. 目标详情页 -->
-            <div class="phone-frame">
-                <div class="page">
-                    <div class="page-title">健康生活</div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 15px;">进度追踪</h4>
-                        <svg width="100%" height="120" style="margin-bottom: 15px;">
-                            <path class="chart-line" d="M20,100 L60,80 L100,60 L140,70 L180,40 L220,50 L260,30 L300,20"/>
-                            <circle cx="20" cy="100" r="4" fill="#B07D62"/>
-                            <circle cx="60" cy="80" r="4" fill="#B07D62"/>
-                            <circle cx="100" cy="60" r="4" fill="#B07D62"/>
-                            <circle cx="140" cy="70" r="4" fill="#B07D62"/>
-                            <circle cx="180" cy="40" r="4" fill="#B07D62"/>
-                            <circle cx="220" cy="50" r="4" fill="#B07D62"/>
-                            <circle cx="260" cy="30" r="4" fill="#B07D62"/>
-                            <circle cx="300" cy="20" r="4" fill="#B07D62"/>
-                        </svg>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 80%;"></div>
-                        </div>
-                        <p style="text-align: center; margin-top: 10px; color: #8D6E63;">80% 完成</p>
-                    </div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 10px;">今日任务</h4>
-                        <div style="margin-bottom: 8px;">
-                            <label style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" checked style="accent-color: #B07D62;">
-                                <span>晨练30分钟</span>
-                            </label>
-                        </div>
-                        <div style="margin-bottom: 8px;">
-                            <label style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" checked style="accent-color: #B07D62;">
-                                <span>喝8杯水</span>
-                            </label>
-                        </div>
-                        <div style="margin-bottom: 8px;">
-                            <label style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" style="accent-color: #B07D62;">
-                                <span>冥想10分钟</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 10px;">相关图片</h4>
-                        <img src="https://source.unsplash.com/300x150/?fitness,health,yoga" alt="健康生活" style="width: 100%; height: 100px; object-fit: cover; border-radius: 10px;">
-                    </div>
-                </div>
-            </div>
-
-            <!-- 5. 创建/编辑目标页 -->
-            <div class="phone-frame">
-                <div class="page">
-                    <div class="page-title">创建新目标</div>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">目标名称</label>
-                        <input type="text" class="clay-input" placeholder="输入你的目标...">
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">目标描述</label>
-                        <textarea class="clay-input" rows="4" placeholder="详细描述你的目标..."></textarea>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">目标类别</label>
-                        <select class="clay-input">
-                            <option>健康</option>
-                            <option>事业</option>
-                            <option>财务</option>
-                            <option>人际关系</option>
-                            <option>个人成长</option>
-                        </select>
-                    </div>
-                    <div style="margin-bottom: 20px;">
-                        <label style="display: block; margin-bottom: 8px; font-weight: 500;">目标期限</label>
-                        <input type="date" class="clay-input">
-                    </div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 10px;">添加愿景图片</h4>
-                        <div style="border: 2px dashed #C39B7B; border-radius: 10px; padding: 30px; text-align: center; color: #8D6E63;">
-                            <svg class="icon-3d" style="margin-bottom: 10px;">
-                                <use href="#plus-icon"></use>
-                            </svg>
-                            <p>点击上传图片</p>
-                        </div>
-                    </div>
-                    <button class="clay-button" style="width: 100%; margin-top: 20px; padding: 16px;">创建目标</button>
-                </div>
-            </div>
-
-            <!-- 6. 肯定语列表页 -->
-            <div class="phone-frame">
-                <div class="page">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <div class="page-title" style="margin: 0;">肯定语</div>
-                        <button class="clay-button" style="padding: 8px 12px;">
-                            <svg class="icon-3d" style="width: 16px; height: 16px;">
-                                <use href="#plus-icon"></use>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="clay-card">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <svg class="icon-3d">
-                                <use href="#heart-icon"></use>
-                            </svg>
-                            <div>
-                                <p style="font-weight: 500;">"我值得拥有所有美好的事物"</p>
-                                <p style="font-size: 12px; color: #8D6E63;">健康 · 每日</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <svg class="icon-3d">
-                                <use href="#star-icon"></use>
-                            </svg>
-                            <div>
-                                <p style="font-weight: 500;">"我的事业蒸蒸日上"</p>
-                                <p style="font-size: 12px; color: #8D6E63;">事业 · 每日</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <svg class="icon-3d">
-                                <use href="#heart-icon"></use>
-                            </svg>
-                            <div>
-                                <p style="font-weight: 500;">"我吸引着积极正面的人和事"</p>
-                                <p style="font-size: 12px; color: #8D6E63;">人际关系 · 每周</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <div style="display: flex; align-items: center; gap: 12px;">
-                            <svg class="icon-3d">
-                                <use href="#star-icon"></use>
-                            </svg>
-                            <div>
-                                <p style="font-weight: 500;">"财富源源不断地流向我"</p>
-                                <p style="font-size: 12px; color: #8D6E63;">财务 · 每日</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clay-card" style="text-align: center; padding: 30px;">
-                        <h4 style="margin-bottom: 15px;">今日肯定语练习</h4>
-                        <p style="font-size: 18px; font-style: italic; color: #B07D62; margin-bottom: 20px;">"我值得拥有所有美好的事物"</p>
-                        <button class="clay-button">开始练习</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 7. 感恩日记页 -->
-            <div class="phone-frame">
-                <div class="page">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <div class="page-title" style="margin: 0;">感恩日记</div>
-                        <button class="clay-button" style="padding: 8px 12px;">
-                            <svg class="icon-3d" style="width: 16px; height: 16px;">
-                                <use href="#plus-icon"></use>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="clay-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <h4>今天 · 12月15日</h4>
-                            <svg class="icon-3d">
-                                <use href="#book-icon"></use>
-                            </svg>
-                        </div>
-                        <p style="line-height: 1.6; color: #5D4037;">今天我感恩能够拥有健康的身体，感恩家人的陪伴和支持。工作上的小进步让我感到满足，晚餐时和朋友的聊天让我感到温暖。</p>
-                        <div style="margin-top: 15px; display: flex; gap: 8px;">
-                            <span style="background: #C39B7B; color: #FAF3E9; padding: 4px 8px; border-radius: 8px; font-size: 12px;">健康</span>
-                            <span style="background: #B07D62; color: #FAF3E9; padding: 4px 8px; border-radius: 8px; font-size: 12px;">家人</span>
-                            <span style="background: #C39B7B; color: #FAF3E9; padding: 4px 8px; border-radius: 8px; font-size: 12px;">工作</span>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                            <h4>昨天 · 12月14日</h4>
-                            <svg class="icon-3d">
-                                <use href="#book-icon"></use>
-                            </svg>
-                        </div>
-                        <p style="line-height: 1.6; color: #5D4037;">感恩今天的好天气，让我能够出门散步。感恩收到朋友的关心问候，感恩学到了新的知识。</p>
-                    </div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 15px;">写下今日感恩</h4>
-                        <textarea class="clay-input" rows="4" placeholder="今天你最感恩的三件事是什么？"></textarea>
-                        <button class="clay-button" style="width: 100%; margin-top: 15px;">保存日记</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 8. 愿景板 -->
-            <div class="phone-frame">
-                <div class="page">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                        <div class="page-title" style="margin: 0;">愿景板</div>
-                        <button class="clay-button" style="padding: 8px 12px;">
-                            <svg class="icon-3d" style="width: 16px; height: 16px;">
-                                <use href="#plus-icon"></use>
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 15px;">我的梦想生活</h4>
-                        <div class="vision-board">
-                            <div class="vision-item">
-                                <img src="https://source.unsplash.com/150x150/?luxury,house,home" alt="梦想之家">
-                            </div>
-                            <div class="vision-item">
-                                <img src="https://source.unsplash.com/150x150/?travel,beach,vacation" alt="旅行">
-                            </div>
-                            <div class="vision-item">
-                                <img src="https://source.unsplash.com/150x150/?success,business,office" alt="事业成功">
-                            </div>
-                            <div class="vision-item">
-                                <img src="https://source.unsplash.com/150x150/?family,love,happiness" alt="幸福家庭">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 15px;">健康目标</h4>
-                        <div class="vision-board">
-                            <div class="vision-item">
-                                <img src="https://source.unsplash.com/150x150/?fitness,gym,workout" alt="健身">
-                            </div>
-                            <div class="vision-item">
-                                <img src="https://source.unsplash.com/150x150/?yoga,meditation,zen" alt="瑜伽">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clay-card" style="text-align: center; padding: 30px;">
-                        <svg class="large-icon" style="margin-bottom: 15px;">
-                            <use href="#vision-icon"></use>
-                        </svg>
-                        <h4 style="margin-bottom: 10px;">创建新愿景板</h4>
-                        <p style="color: #8D6E63; margin-bottom: 20px;">添加图片来可视化你的目标</p>
-                        <button class="clay-button">开始创建</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 9. 设置页 -->
-            <div class="phone-frame">
-                <div class="page">
-                    <div class="page-title">设置</div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 20px;">通知设置</h4>
-                        <div class="settings-item">
-                            <span>每日提醒</span>
-                            <div class="toggle active"></div>
-                        </div>
-                        <div class="settings-item">
-                            <span>肯定语推送</span>
-                            <div class="toggle active"></div>
-                        </div>
-                        <div class="settings-item">
-                            <span>目标进度提醒</span>
-                            <div class="toggle"></div>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 20px;">个人设置</h4>
-                        <div class="settings-item">
-                            <span>深色模式</span>
-                            <div class="toggle"></div>
-                        </div>
-                        <div class="settings-item">
-                            <span>数据同步</span>
-                            <div class="toggle active"></div>
-                        </div>
-                        <div class="settings-item">
-                            <span>自动备份</span>
-                            <div class="toggle active"></div>
-                        </div>
-                    </div>
-                    <div class="clay-card">
-                        <h4 style="margin-bottom: 20px;">应用信息</h4>
-                        <div class="settings-item">
-                            <span>版本</span>
-                            <span style="color: #8D6E63;">1.0.0</span>
-                        </div>
-                        <div class="settings-item">
-                            <span>帮助与支持</span>
-                            <span style="color: #8D6E63;">></span>
-                        </div>
-                        <div class="settings-item">
-                            <span>关于我们</span>
-                            <span style="color: #8D6E63;">></span>
-                        </div>
-                    </div>
-                    <button class="clay-button" style="width: 100%; margin-top: 20px; background: #C39B7B; color: #FAF3E9;">退出登录</button>
-                </div>
+            <div>
+                 <div class="panel-title">错误日志聚类 Top 5</div>
+                 <ul id="log-cluster-list" class="log-cluster-list"></ul>
             </div>
         </div>
     </div>
 
-    <script>
-        // 添加交互效果
-        document.addEventListener('DOMContentLoaded', function() {
-            // 切换开关交互
-            const toggles = document.querySelectorAll('.toggle');
-            toggles.forEach(toggle => {
-                toggle.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                });
-            });
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // --- Mock Data ---
+    const mockData = {
+        coreMetrics: { sla: 99.98, mttr: 15.2, activeAlerts: 2, predictiveRisks: 3 },
+        stabilityRadar: {
+            labels: ['性能', '可用性', '负载', '吞吐', '数据', '体验'],
+            values: [85, 99, 75, 90, 95, 80] // out of 100
+        },
+        resources: [
+            { name: 'Web应用集群', cpu: 65, mem: 72 },
+            { name: '数据库集群', cpu: 88, mem: 60 },
+            { name: '缓存集群', cpu: 45, mem: 55 }
+        ],
+        alerts: [
+            { type: 'predictive', icon: 'fa-crystal-ball', message: '数据库归档存储将在约 3 天后耗尽' },
+            { type: 'active-p0', icon: 'fa-fire', message: '身份认证服务(instance-03)宕机' },
+            { type: 'anomaly', icon: 'fa-wave-square', message: '“社保查询接口”响应时间突然从 50ms 上升至 200ms' },
+            { type: 'active-p1', icon: 'fa-exclamation-triangle', message: '数据库主库CPU使用率达到 95%' },
+            { type: 'predictive', icon: 'fa-crystal-ball', message: 'www.gov.cn 的SSL证书将在 12 天后过期' },
+            { type: 'anomaly', icon: 'fa-user-secret', message: 'IP 123.45.67.89 登录失败次数过多' },
+        ],
+        services: [
+            { name: '身份认证', error: 15.2, latency: 850, status: 'red' },
+            { name: '电子证照', error: 0.1, latency: 120, status: 'green' },
+            { name: '公共支付', error: 2.5, latency: 350, status: 'orange' },
+            { name: '数据共享', error: 0.05, latency: 80, status: 'green' },
+            { name: '社保服务', error: 1.8, latency: 210, status: 'orange', flicker: true },
+            { name: '公积金服务', error: 0, latency: 90, status: 'green' },
+            { name: '不动产登记', error: 0.2, latency: 150, status: 'green' },
+            { name: '消息队列', error: 0, latency: 10, status: 'green' },
+        ],
+        logs: [
+            { level: 'ERROR', service: 'auth-service', msg: 'Failed to connect to database: timeout expired', traceId: 'a1b2c3d4' },
+            { level: 'ERROR', service: 'payment-service', msg: 'NullPointerException at com.gov.pay.process(Pay.java:123)', traceId: 'e5f6g7h8' },
+            { level: 'ERROR', service: 'social-security', msg: 'Upstream service [data-sharing] returned 503', traceId: 'i9j0k1l2' },
+        ],
+        logClusters: [
+            { pattern: 'NullPointerException at com.gov.pay.process(*)', count: 1205 },
+            { pattern: 'Connect to database timed out', count: 89 },
+            { pattern: 'Upstream service * returned 503', count: 72 },
+            { pattern: 'Invalid argument provided for "userId"', count: 45 },
+            { pattern: 'SSL handshake failed with peer', count: 12 },
+        ]
+    };
 
-            // 按钮悬浮效果
-            const buttons = document.querySelectorAll('.clay-button');
-            buttons.forEach(button => {
-                button.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-2px)';
-                });
-                button.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                });
-            });
+    // --- Chart instances & DOM elements ---
+    let stabilityRadarChart;
+    const resourceLevelsEl = document.getElementById('resource-levels');
+    const alertListEl = document.getElementById('alert-list');
+    const serviceHeatmapEl = document.getElementById('service-heatmap');
+    const topErrorListEl = document.getElementById('top-error-list');
+    const topSlowListEl = document.getElementById('top-slow-list');
+    const logStreamEl = document.getElementById('log-stream');
+    const logClusterListEl = document.getElementById('log-cluster-list');
 
-            // 卡片悬浮效果
-            const cards = document.querySelectorAll('.clay-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    this.style.transform = 'translateY(-3px)';
-                    this.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2), inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -2px 4px rgba(0,0,0,0.1)';
-                });
-                card.addEventListener('mouseleave', function() {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15), inset 0 2px 4px rgba(255,255,255,0.3), inset 0 -2px 4px rgba(0,0,0,0.1)';
-                });
-            });
+
+    // --- Render Functions ---
+    function renderCoreMetrics() {
+        // This is static for the prototype
+    }
+    
+    function renderStabilityRadar() {
+        const ctx = document.getElementById('stability-radar').getContext('2d');
+        const data = mockData.stabilityRadar;
+        stabilityRadarChart = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: '系统健康度',
+                    data: data.values,
+                    backgroundColor: 'rgba(56, 139, 253, 0.2)',
+                    borderColor: 'rgba(56, 139, 253, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(56, 139, 253, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(56, 139, 253, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                elements: { line: { tension: 0.1 } },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.2)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.2)' },
+                        pointLabels: { color: 'var(--text-color)', font: { size: 12 } },
+                        ticks: { display: false, beginAtZero: true, max: 100 }
+                    }
+                },
+                plugins: { legend: { display: false } }
+            }
         });
-    </script>
+    }
+
+    function renderResources() {
+        resourceLevelsEl.innerHTML = '';
+        mockData.resources.forEach(res => {
+            const cpuColor = res.cpu > 85 ? 'var(--color-red)' : res.cpu > 70 ? 'var(--color-orange)' : 'var(--color-green)';
+            const memColor = res.mem > 85 ? 'var(--color-red)' : res.mem > 70 ? 'var(--color-orange)' : 'var(--color-green)';
+            resourceLevelsEl.innerHTML += `
+                <div class="water-level">
+                    <label>${res.name}</label>
+                    <div class="level-bar-bg">
+                        <div class="level-bar-fg" style="width: ${res.cpu}%; background-color: ${cpuColor};" title="CPU: ${res.cpu}%"></div>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    function renderAlerts() {
+        alertListEl.innerHTML = '';
+        mockData.alerts.forEach(alert => {
+            alertListEl.innerHTML += `
+                <li class="${alert.type}">
+                    <i class="fas ${alert.icon} icon"></i>
+                    <span class="message">${alert.message}</span>
+                    <span class="time">${new Date().toLocaleTimeString()}</span>
+                </li>
+            `;
+        });
+    }
+
+    function renderServiceHeatmap() {
+        serviceHeatmapEl.innerHTML = '';
+        mockData.services.forEach(s => {
+            const colorClass = `background-color: var(--color-${s.status});`;
+            const flickerClass = s.flicker ? 'flicker' : '';
+            serviceHeatmapEl.innerHTML += `
+                <div class="service-cell ${flickerClass}" style="${colorClass}">
+                    ${s.name}
+                </div>`;
+        });
+    }
+
+    function renderTopLists() {
+        topErrorListEl.innerHTML = '';
+        const sortedByError = [...mockData.services].sort((a,b) => b.error - a.error);
+        for(let i=0; i<5; i++) {
+            topErrorListEl.innerHTML += `
+                <li>
+                    <span><span class="service">${sortedByError[i].name}</span></span>
+                    <span class="value error-value">${sortedByError[i].error.toFixed(2)}%</span>
+                </li>`;
+        }
+
+        topSlowListEl.innerHTML = '';
+        const sortedByLatency = [...mockData.services].sort((a,b) => b.latency - a.latency);
+        for(let i=0; i<5; i++) {
+            topSlowListEl.innerHTML += `
+                <li>
+                    <span><span class="service">${sortedByLatency[i].name}</span></span>
+                    <span class="value slow-value">${sortedByLatency[i].latency} ms</span>
+                </li>`;
+        }
+    }
+
+    function renderLogs() {
+        logStreamEl.innerHTML = '';
+        mockData.logs.forEach(log => {
+             logStreamEl.innerHTML += `
+                <div class="log-line">
+                    <span class="timestamp">[${new Date().toISOString()}]</span>
+                    <span class="level-${log.level}">${log.level}</span>
+                    <span class="service">[${log.service}]</span>
+                    <span>${log.msg}</span>
+                    <span class="trace-id" title="点击查看完整链路追踪">[TraceID: ${log.traceId}]</span>
+                </div>`;
+        });
+        logStreamEl.scrollTop = logStreamEl.scrollHeight;
+    }
+    
+    function renderLogClusters() {
+        logClusterListEl.innerHTML = '';
+        mockData.logClusters.forEach(cluster => {
+            logClusterListEl.innerHTML += `
+                <li class="log-cluster-item">
+                    <div class="pattern">${cluster.pattern}</div>
+                    <div class="count">出现次数: ${cluster.count.toLocaleString()}</div>
+                </li>
+            `;
+        });
+    }
+
+    // --- Update Loop ---
+    function updateData() {
+        // Simulate radar changes
+        mockData.stabilityRadar.values = mockData.stabilityRadar.values.map(v => {
+            let newVal = v + (Math.random() - 0.5) * 5;
+            return Math.max(50, Math.min(100, newVal));
+        });
+        stabilityRadarChart.data.datasets[0].data = mockData.stabilityRadar.values;
+        stabilityRadarChart.update();
+
+        // Simulate new log
+        if (Math.random() > 0.7) {
+            const randomService = mockData.services[Math.floor(Math.random() * mockData.services.length)];
+            const newLog = { 
+                level: 'ERROR', 
+                service: randomService.name.toLowerCase().replace(' ', '-'), 
+                msg: 'A new simulated error occurred.', 
+                traceId: (Math.random() + 1).toString(36).substring(2)
+            };
+            mockData.logs.push(newLog);
+            if(mockData.logs.length > 20) mockData.logs.shift(); // keep log array size manageable
+            renderLogs();
+        }
+    }
+
+    // --- Initial Render & Interval ---
+    renderCoreMetrics();
+    renderStabilityRadar();
+    renderResources();
+    renderAlerts();
+    renderServiceHeatmap();
+    renderTopLists();
+    renderLogs();
+    renderLogClusters();
+
+    setInterval(updateData, 3000);
+});
+</script>
+
 </body>
 </html>
